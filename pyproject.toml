@@ -1,0 +1,9 @@
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+lint.select = ["ALL"]
+ignore = ["D100", "D104", "PERF401", "LOG015", "PGH004"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
