@@ -68,6 +68,7 @@ def calculate_unit_commitment(payload: ProductionRequest) -> list[ProductionResp
     """
     result = []
 
+    # If the load is zero, no production is needed.
     if payload.load == 0:
         for plant in payload.powerplants:
             result.append(ProductionResponse(name=plant.name, p=0.0))
@@ -115,6 +116,8 @@ def allocate_load(fuels: Fuels, ordered_plants: list[PowerPlant], load: float) -
 
             load_taken = min(plant.pmax * (fuels.wind_percentage / 100), remaining_load)
         else:
+            # Allocate the load by taking the lesser between the plant max capacity or the remaining load,
+            # then adjust to at least the plant minimum capacity (as plants cannot produce below pmin)
             load_taken = min(plant.pmax, remaining_load)
             load_taken = max(load_taken, plant.pmin)
 
